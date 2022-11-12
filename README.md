@@ -24,7 +24,7 @@ python -m venv venv
 pip install -r requirements.txt
 ```
 
-To configure secrets and environment variable, create a file `instance/config.py`. Add your secrets to `.env` file.
+To configure secrets and environment variable, create a file `instance/config.py`. Add your secrets to `.env` file in the root of your project.
 
 ```
 # instance/config.py
@@ -46,4 +46,10 @@ To run flask app locally
 
 ```
 flask --app expense-tracker run --host 0.0.0.0
+```
+
+To run tailwindcss(only during development)
+
+```
+npx tailwindcss -i expense_tracker/static/src/input.css -o expense_tracker/static/style.css --watch
 ```

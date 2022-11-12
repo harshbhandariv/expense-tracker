@@ -1,7 +1,7 @@
 import os
 
-from flask import Flask, g
-
+from flask import Flask, g, render_template
+from expense_tracker.auth import login_required
 from expense_tracker.db import get_db
 
 
@@ -32,5 +32,11 @@ def create_app(test_config=None):
     # Index page
     @app.route('/')
     def index():
-        return 'Hello, World!'
+        return render_template('index.html')
+
+    # Dashboard
+    @app.route('/dashboard')
+    @login_required
+    def dashboard():
+        return render_template('dashboard.html')
     return app
