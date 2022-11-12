@@ -80,3 +80,29 @@ def login():
 def logout():
     session.clear()
     return redirect(url_for('index'))
+
+
+@bp.before_app_request
+def load_logged_in_user():
+    user_id = session.get('user_id')
+
+    if user_id is None:
+        g.user = None
+    else:
+        db = get_db()
+        sql = "SELECT * FROM user WHERE id=?"
+        stmt = ibm_db.prepare(db, sql)
+        ibm_db.bind_param(stmt, 1, user_id)
+        ibm_db.execute(stmt)
+        g.user = ibm_db.fetch_assoc(stmt)
+
+
+def login_required(view):
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if g.user is None:
+            return redirect(url_for('auth.login'))
+
+        return view(**kwargs)
+
+    return wrapped_view
