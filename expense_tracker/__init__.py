@@ -28,15 +28,12 @@ def create_app(test_config=None):
     db.init_app(app)
     from . import auth
     app.register_blueprint(auth.bp)
+    from . import dashboard
+    app.register_blueprint(dashboard.bp)
+    app.add_url_rule('/', endpoint='index')
 
     # Index page
     @app.route('/')
     def index():
         return render_template('index.html')
-
-    # Dashboard
-    @app.route('/dashboard')
-    @login_required
-    def dashboard():
-        return render_template('dashboard.html')
     return app

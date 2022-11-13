@@ -23,8 +23,10 @@
           <ul class="flex flex-row space-x-3 justify-center items-center">
             {% if g.user %}
             <li>
-              <span class="px-4 py-2 text-white font-semibold"
-                >{{ g.user['USERNAME'] }}</span
+              <a
+                href="{{ url_for('dashboard.index') }}"
+                class="px-4 py-2 text-white font-semibold"
+                >{{ g.user['USERNAME'] }}</a
               >
             </li>
             <li>

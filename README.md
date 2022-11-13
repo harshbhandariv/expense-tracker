@@ -48,7 +48,7 @@ To run flask app locally
 flask --app expense_tracker run --host 0.0.0.0
 ```
 
-To run tailwindcss(only during development)
+To run tailwindcss(only during development). Make sure to install npm dependencies.
 
 ```
 npx tailwindcss -i expense_tracker/static/src/input.css -o expense_tracker/static/style.css --watch
