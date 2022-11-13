@@ -42,6 +42,12 @@ CONN_STR=
 SECRET_KEY=
 ```
 
+To initialize database
+
+```
+flask --app expense_tracker init-db
+```
+
 To run flask app locally
 
 ```
