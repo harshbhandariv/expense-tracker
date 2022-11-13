@@ -45,7 +45,7 @@ SECRET_KEY=
 To run flask app locally
 
 ```
-flask --app expense-tracker run --host 0.0.0.0
+flask --app expense_tracker run --host 0.0.0.0
 ```
 
 To run tailwindcss(only during development)
