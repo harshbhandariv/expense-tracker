@@ -62,9 +62,9 @@ def login():
         user = ibm_db.fetch_assoc(stmt)
 
         if not user:
-            error = 'Incorrect username.'
+            error = 'Incorrect username or password'
         elif not check_password_hash(user['PASSWORD'], password):
-            error = 'Incorrect password.'
+            error = 'Incorrect username or password.'
 
         if error is None:
             session.clear()
