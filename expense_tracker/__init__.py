@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, g, render_template
+from flask import Flask, g, redirect, render_template, url_for
 from expense_tracker.auth import login_required
 from expense_tracker.db import get_db
 
@@ -31,9 +31,13 @@ def create_app(test_config=None):
     from . import dashboard
     app.register_blueprint(dashboard.bp)
     app.add_url_rule('/', endpoint='index')
+    from . import transaction
+    app.register_blueprint(transaction.bp)
 
     # Index page
     @app.route('/')
     def index():
+        if g.user:
+            return redirect(url_for('dashboard.index'))
         return render_template('index.html')
     return app

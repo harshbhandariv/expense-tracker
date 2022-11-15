@@ -59,9 +59,12 @@
     <section class="p-4">
       <div class="md:w-4/5 mx-auto">
         <header class="mb-6">{% block header %}{% endblock %}</header>
-        {% for message in get_flashed_messages() %}
-        <div class="dark:text-white">{{ message }}</div>
-        {% endfor %} {% block content %}{% endblock %}
+        <div class="mb-6">
+          {% for message in get_flashed_messages() %}
+          <div class="dark:text-white">{{ message }}</div>
+          {% endfor %}
+        </div>
+        {% block content %}{% endblock %}
       </div>
     </section>
   </body>

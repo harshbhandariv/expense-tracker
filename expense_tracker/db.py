@@ -20,13 +20,13 @@ def close_db(e=None):
 def init_db():
     db = get_db()
     ibm_db.exec_immediate(db, 'DROP TABLE IF EXISTS user')
-    ibm_db.exec_immediate(db, 'DROP TABLE IF EXISTS expense')
+    ibm_db.exec_immediate(db, 'DROP TABLE IF EXISTS transaction')
     ibm_db.exec_immediate(
-        db, """CREATE TABLE user (id INT NOT NULL GENERATED ALWAYS AS IDENTITY, name varchar(255) NOT NULL, username varchar(255) NOT NULL UNIQUE, email varchar(255) NOT NULL UNIQUE, password varchar(255) NOT NULL, balance DECIMAL NOT NULL DEFAULT 0, alert DECIMAL NOT NULL DEFAULT 0, PRIMARY KEY (id))""")
+        db, """CREATE TABLE user (id INT NOT NULL GENERATED ALWAYS AS IDENTITY, name varchar(255) NOT NULL, username varchar(255) NOT NULL UNIQUE, email varchar(255) NOT NULL UNIQUE, password varchar(255) NOT NULL, limit DECIMAL NOT NULL DEFAULT 0, PRIMARY KEY (id))""")
     ibm_db.exec_immediate(
-        db, "CREATE TABLE expense (id INT NOT NULL GENERATED ALWAYS AS IDENTITY, user_id INT NOT NULL, category varchar(255) NOT NULL, amount DECIMAL NOT NULL, PRIMARY KEY (id))")
+        db, "CREATE TABLE transaction (id INT NOT NULL GENERATED ALWAYS AS IDENTITY, user_id INT NOT NULL, category varchar(255) NOT NULL, description varchar(1000) NOT NULL, amount DECIMAL NOT NULL, date date NOT NULL, receipt varchar(255) NOT NULL, PRIMARY KEY (id))")
     ibm_db.exec_immediate(
-        db, "ALTER TABLE Expense ADD CONSTRAINT Expense_fk0 FOREIGN KEY (user_id) REFERENCES User(id)")
+        db, "ALTER TABLE transaction ADD CONSTRAINT Expense_fk0 FOREIGN KEY (user_id) REFERENCES User(id)")
 
 
 @click.command('init-db')
