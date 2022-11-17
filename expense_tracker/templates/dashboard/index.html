@@ -10,9 +10,12 @@
   <div class="dark:text-white">
     Monthly expense limit: {{ g.user["LIMIT"] }}
   </div>
+  <div class="dark:text-white">
+    Current month expenses: {{ current_month_expense }}
+  </div>
 </div>
-<div class="flex space-x-5 flex-wrap">
-  <div>
+<div class="flex flex-col md:flex-row flex-wrap justify-start items-start">
+  <div class="m-3">
     <a href="{{ url_for('transaction.limit') }}">
       <button
         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -21,7 +24,7 @@
       </button>
     </a>
   </div>
-  <div>
+  <div class="m-3">
     <a href="{{ url_for('transaction.index') }}">
       <button
         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -31,4 +34,12 @@
     </a>
   </div>
 </div>
+<div class="flex flex-col">
+  <div>
+    <h2 class="text-md md:text-xl font-bold dark:text-white">Expense Chart</h2>
+    <div id="expense"></div>
+  </div>
+</div>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="{{ url_for('static', filename='chart.js') }}"></script>
 {% endif %} {% endblock %}
