@@ -33,6 +33,24 @@ from os import environ
 CONN_STR = environ.get('CONN_STR')
 
 SECRET_KEY = environ.get('SECRET_KEY')
+
+ADMIN_MAIL = environ.get('ADMIN_MAIL')
+
+MAIL_API_KEY = environ.get('MAIL_API_KEY')
+
+MAIL_API_SECRET = environ.get('MAIL_API_SECRET')
+
+COS_ENDPOINT = environ.get('COS_ENDPOINT')
+
+COS_INSTANCE_CRN = environ.get('COS_INSTANCE_CRN')
+
+COS_API_KEY_ID = environ.get('COS_API_KEY_ID')
+
+COS_BUCKET_NAME = environ.get('COS_BUCKET_NAME')
+
+COS_HMAC_ACCESS_KEY = environ.get('COS_HMAC_ACCESS_KEY')
+
+COS_HMAC_SECRET_KEY = environ.get('COS_HMAC_SECRET_KEY')
 ```
 
 `.env` file
@@ -40,6 +58,15 @@ SECRET_KEY = environ.get('SECRET_KEY')
 ```
 CONN_STR=
 SECRET_KEY=
+ADMIN_MAIL=
+MAIL_API_KEY=
+MAIL_API_SECRET=
+COS_ENDPOINT=
+COS_INSTANCE_CRN=
+COS_API_KEY_ID=
+COS_BUCKET_NAME=
+COS_HMAC_ACCESS_KEY=
+COS_HMAC_SECRET_KEY=
 ```
 
 To initialize database
@@ -58,4 +85,59 @@ To run tailwindcss(only during development). Make sure to install npm dependenci
 
 ```
 npx tailwindcss -i expense_tracker/static/src/input.css -o expense_tracker/static/style.css --watch
+```
+
+### Building python wheel package
+
+```
+pip install -e .
+python setup.py bdist_wheel
+```
+
+### Docker
+
+To create docker image:
+
+```
+docker build -t expense_tracker .
+```
+
+To run a container:
+
+```
+docker run -dp 8080:8080 --env-file .env expense_tracker
+```
+
+### Kubernetes
+
+Create a `expense-tracker.secrets.yaml` file containing secret required by `expense-tracker.deployment.yaml`.
+
+```
+apiVersion: v1
+kind: Secret
+metadata:
+  name: expense-tracker-secret
+type: Opaque
+data:
+  CONN_STR:
+  SECRET_KEY:
+  ADMIN_MAIL:
+  MAIL_API_KEY:
+  MAIL_API_SECRET:
+  COS_ENDPOINT:
+  COS_INSTANCE_CRN:
+  COS_API_KEY_ID:
+  COS_BUCKET_NAME:
+  COS_HMAC_ACCESS_KEY:
+  COS_HMAC_SECRET_KEY:
+```
+
+Make sure to `base64` encode the secrets.
+
+To deploy expense_tracker using kubernetes:
+
+```
+kubectl apply -f kubernetes/expense-tracker.secets.yaml
+kubectl apply -f kubernetes/expense-tracker.deployment.yaml
+kubectl apply -f kubernetes/expense-tracker.service.yaml
 ```
