@@ -10,12 +10,12 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
       - name: Build wheel package
         run: pip install -e . && python setup.py bdist_wheel
       - name: Copy configuration to instance folder
         run: mkdir instance && cp config.py instance/config.py
-      - name: Checkout
-        uses: actions/checkout@v3
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
       - name: Set up Docker Buildx
